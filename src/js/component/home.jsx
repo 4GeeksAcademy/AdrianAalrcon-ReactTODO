@@ -1,26 +1,84 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+    const [counter, setCounter] = useState(0);
+    const [taskInput, setTaskInput] = useState("");
+    const [tasks, setTasks] = useState([]);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+
+    useEffect(() => {
+        const listItems = document.querySelectorAll(".list-group-item");
+        listItems.forEach((item, index) => {
+            if (index === hoveredIndex) {
+                item.style.backgroundColor = "red";
+            } else {
+                item.style.backgroundColor = "transparent";
+            }
+        });
+    }, [hoveredIndex]);
+
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter" && taskInput.trim() !== "") {
+            setTasks([...tasks, taskInput]);
+            setTaskInput("");
+            setCounter(counter + 1);
+        }
+    };
+
+    const handleDelete = (indexToDelete) => {
+        setTasks(tasks.filter((task, index) => index !== indexToDelete));
+        setCounter(counter - 1);
+    };
+
+    return (
+        <div>
+            <div className="row mt-3">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                    <div className="card shadow">
+                        <div className="card ">
+                            <div className="card-body">
+                                <h1 className="card-title p-1 text-center">TODO LIST</h1>
+                                <div className="input-group">
+                                    <input
+                                        value={taskInput}
+                                        type="text"
+                                        className="form-control shadow-none"
+                                        placeholder="What needs to be done?"
+                                        onChange={(e) => setTaskInput(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                    />
+                                    <button
+                                        className="btn btn-dark"
+                                        onClick={() => {
+                                            if (taskInput.trim() !== "") {
+                                                setTasks([...tasks, taskInput]);
+                                                setTaskInput("");
+                                                setCounter(counter + 1);
+                                            }
+                                        }}
+                                    >Add</button>
+                                </div>
+                                <ul className="list-group mt-2">
+                                    {tasks.map((task, index) => (
+                                        <li
+                                            key={index}
+                                            className="list-group-item"
+                                            onMouseEnter={() => setHoveredIndex(index)}
+                                            onMouseLeave={() => setHoveredIndex(null)}
+                                            onClick={() => handleDelete(index)}
+                                        >{task}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <p className="small text-left ms-3">{counter === 0 ? "No tasks, add a task" : counter + " items left"}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-4"></div>
+            </div>
+        </div>
+    );
 };
 
 export default Home;
