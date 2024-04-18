@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 const Home = () => {
-    const [counter, setCounter] = useState(0);
     const [taskInput, setTaskInput] = useState("");
     const [tasks, setTasks] = useState([]);
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -21,13 +20,11 @@ const Home = () => {
         if (event.key === "Enter" && taskInput.trim() !== "") {
             setTasks([...tasks, taskInput]);
             setTaskInput("");
-            setCounter(counter + 1);
         }
     };
 
     const handleDelete = (indexToDelete) => {
         setTasks(tasks.filter((task, index) => index !== indexToDelete));
-        setCounter(counter - 1);
     };
 
     return (
@@ -54,7 +51,6 @@ const Home = () => {
                                             if (taskInput.trim() !== "") {
                                                 setTasks([...tasks, taskInput]);
                                                 setTaskInput("");
-                                                setCounter(counter + 1);
                                             }
                                         }}
                                     >Add</button>
@@ -71,7 +67,7 @@ const Home = () => {
                                     ))}
                                 </ul>
                             </div>
-                            <p className="small text-left ms-3">{counter === 0 ? "No tasks, add a task" : counter + " items left"}</p>
+                            <p className="small text-left ms-3">{tasks.length === 0 ? "No tasks, add a task" : tasks.length + " items left"}</p>
                         </div>
                     </div>
                 </div>
