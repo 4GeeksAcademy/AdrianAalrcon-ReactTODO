@@ -1,5 +1,3 @@
-// Home.jsx
-
 import React, { useState } from "react";
 import TaskItem from "./taskitem";
 
@@ -55,10 +53,10 @@ const Home = () => {
                                     />
                                 ))}
                             </ul>
-                            <p className="small text-left ms-3 mt-2">
-                                {tasks.length === 0 ? "No tasks, add a task" : `${tasks.length} item(s) left`}
-                            </p>
                         </div>
+                        <p className="small text-left ms-3 mt-2">
+                            {tasks.length === 0 ? "No tasks, add a task" : `${tasks.length} item(s) left`}
+                        </p>
                     </div>
                 </div>
             </div>

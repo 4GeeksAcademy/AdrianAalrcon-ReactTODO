@@ -1,9 +1,12 @@
-/* Custom.css */
-
 .list-group-item {
     transition: background-color 0.3s;
 }
 
 .list-group-item:hover {
     background-color: #ffe75fa6;
+}
+
+.task-content {
+    max-height: 60px;
+    overflow-y: auto;
 }
